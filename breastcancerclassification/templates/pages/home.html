@@ -1,1 +1,164 @@
 {% extends "base.html" %}
+{% block content %}
+{% if request.user.is_authenticated %}
+
+<form>
+    <div class="row p-4">
+        <div class="col-sm-4">
+            <label for="clump_thickness">Clump thickness</label>
+            <input type="range" class="custom-range" min="1" max="10" id="clump_thickness">
+            <div class="clump_value">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="uniformityofCellSize">Uniformity of Cell Size</label>
+            <input type="range" class="custom-range" min="1" max="10" id="uniformityofCellSize">
+            <div class="uniformityofCellSizeValue">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="uniformityofCellShape">Uniformity of Cell Shape</label>
+            <input type="range" class="custom-range" min="1" max="10" id="uniformityofCellShape">
+            <div class="uniformityofCellShapeValue">Value: </div>
+        </div>
+    </div>
+    
+    <div class="row p-4">
+        <div class="col-sm-4">
+            <label for=">marginalAdhesion">Marginal Adhesion</label>
+            <input type="range" class="custom-range" min="1" max="10" id="marginalAdhesion">
+            <div class="marginalAdhesionValue">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="singleEpithelialCellSize">Single Epithelial Cell Size</label>
+            <input type="range" class="custom-range" min="1" max="10" id="singleEpithelialCellSize">
+            <div class="singleEpithelialCellSizeValue">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="bareNuclei">Bare Nuclei</label>
+            <input type="range" class="custom-range" min="1" max="10" id="bareNuclei">
+            <div class="bareNucleiValue">Value: </div>
+        </div>
+    </div>
+    <div class="row p-4">
+        <div class="col-sm-4">
+            <label for="blandChromatin">Bland Chromatin</label>
+            <input type="range" class="custom-range" min="1" max="10" id="blandChromatin">
+            <div class="blandChromatinValue">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="normalNucleoli">Normal Nucleoli</label>
+            <input type="range" class="custom-range" min="1" max="10" id="normalNucleoli">
+            <div class="normalNucleoliValue">Value: </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="mitoses">Mitoses</label>
+            <input type="range" class="custom-range" min="1" max="10" id="mitoses">
+            <div class="mitosesValue">Value: </div>
+        </div>
+    </div>
+    <button class="submit btn-primary">Submit </button>
+    <div class="diagnose"></div>
+</form>
+{% block javascript %}
+
+<script>
+    $(document).ready(function () {
+       
+        $('#clump_thickness').change(function () {
+            $('.clump_value').html('Value:');
+            $('.clump_value').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#uniformityofCellSize').change(function () {
+            $('.uniformityofCellSizeValue').html('Value:');
+            $('.uniformityofCellSizeValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#uniformityofCellShape').change(function () {
+            $('.uniformityofCellShapeValue').html('Value:');
+            $('.uniformityofCellShapeValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#marginalAdhesion').change(function () {
+            $('.marginalAdhesionValue').html('Value:');
+            $('.marginalAdhesionValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#singleEpithelialCellSize').change(function () {
+            $('.singleEpithelialCellSizeValue').html('Value:');
+            $('.singleEpithelialCellSizeValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#bareNuclei').change(function () {
+            $('.bareNucleiValue').html('Value:');
+            $('.bareNucleiValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#blandChromatin').change(function () {
+            $('.blandChromatinValue').html('Value:');
+            $('.blandChromatinValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#normalNucleoli').change(function () {
+            $('.normalNucleoliValue').html('Value:');
+            $('.normalNucleoliValue').append(this.value);
+            console.log("value is", this.value);
+        });
+        $('#mitoses').change(function () {
+            $('.mitosesValue').html('Value:');
+            $('.mitosesValue').append(this.value);
+            console.log("value is", this.value);
+        });
+         function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        var pages = 1;
+        $('.submit').click(function (e) {
+            console.log("clicked");
+            $.ajax({
+                url: "diagnose/",
+                method: "post",
+                data: {
+                    clump_thickness: $('#clump_thickness').val(),
+                    uniformityofCellSize: $('#uniformityofCellSize').val(),
+                    uniformityofCellShape: $('#uniformityofCellShape').val(),
+                    marginalAdhesion: $('#marginalAdhesion').val(),
+                    singleEpithelialCellSize: $('#singleEpithelialCellSize').val(),
+                    bareNuclei: $('#bareNuclei').val(),
+                    blandChromatin: $('#blandChromatin').val(),
+                    normalNucleoli: $('#normalNucleoli').val(),
+                    mitoses: $('#mitoses').val(),
+                    name: 'najmathummer'
+                },
+                success: function (data) {
+                    console.log("something")
+                    $('.diagnose').html(data);
+                },
+            });
+            e.preventDefault();
+        });
+    });
+</script>
+
+
+{% endblock javascript %}
+
+{% endif %}
+{% endblock %}
