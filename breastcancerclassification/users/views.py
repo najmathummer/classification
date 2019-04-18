@@ -3,7 +3,9 @@ from django.views import View
 import pandas
 from sklearn.tree import DecisionTreeClassifier
 from django.http import JsonResponse
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
+from django.views.generic import RedirectView
 
 url = 'dataset/breast-cancer-wisconsin.data.csv'
 dataset = pandas.read_csv(url)
@@ -19,9 +21,14 @@ model = DecisionTreeClassifier()
 clf = model.fit(X, Y)
 
 
+
+class UserRedirectView(LoginRequiredMixin, RedirectView):
+
+    def get_redirect_url(self):
+        return reverse("users:home")
+
 class HomePageView(TemplateView):
     template_name = 'pages/home.html'
-
 
 class DiagnoseView(View):
     def post(self, request):
@@ -40,7 +47,9 @@ class DiagnoseView(View):
         input_array.extend([clump_thickness, uniformity_of_cell_size, uniformity_of_Cell_Shape,
                            marginal_Adhesion, single_Epithelial_Cell_Size, bare_Nuclei, bland_Chromatin, normal_Nucleoli, mitosis])
         input_array = list(map(int, input_array))
-        if(input_array[0] == 2):
+        tumour_value = clf.predict([input_array])
+        print("input array", tumour_value)
+        if(tumour_value[0] == 2):
             tumour = "benign"
         else:
             tumour  = "malignant"

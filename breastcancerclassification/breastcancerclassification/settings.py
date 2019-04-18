@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites', # new
 
-    'crispy_forms',
+    "crispy_forms",
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -122,10 +122,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR,"static_files")
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -133,8 +136,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTH_USER_MODEL = 'users.User' # new
-LOGIN_REDIRECT_URL = 'users:home'
+LOGIN_REDIRECT_URL = 'users:redirect'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 ACCOUNT_ALLOW_REGISTRATION = True
+CRISPY_TEMPLATE_PACK = "bootstrap4"

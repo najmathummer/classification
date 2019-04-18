@@ -3,21 +3,21 @@
 {% if request.user.is_authenticated %}
 
 <form>
-    <div class="row p-4">
+    <div class="row p-4 mt-5 pt-5">
         <div class="col-sm-4">
             <label for="clump_thickness">Clump thickness</label>
             <input type="range" class="custom-range" min="1" max="10" id="clump_thickness">
-            <div class="clump_value">Value: </div>
+            <div class="clump_value">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="uniformityofCellSize">Uniformity of Cell Size</label>
             <input type="range" class="custom-range" min="1" max="10" id="uniformityofCellSize">
-            <div class="uniformityofCellSizeValue">Value: </div>
+            <div class="uniformityofCellSizeValue">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="uniformityofCellShape">Uniformity of Cell Shape</label>
             <input type="range" class="custom-range" min="1" max="10" id="uniformityofCellShape">
-            <div class="uniformityofCellShapeValue">Value: </div>
+            <div class="uniformityofCellShapeValue">Value: 6</div>
         </div>
     </div>
     
@@ -25,38 +25,43 @@
         <div class="col-sm-4">
             <label for=">marginalAdhesion">Marginal Adhesion</label>
             <input type="range" class="custom-range" min="1" max="10" id="marginalAdhesion">
-            <div class="marginalAdhesionValue">Value: </div>
+            <div class="marginalAdhesionValue">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="singleEpithelialCellSize">Single Epithelial Cell Size</label>
             <input type="range" class="custom-range" min="1" max="10" id="singleEpithelialCellSize">
-            <div class="singleEpithelialCellSizeValue">Value: </div>
+            <div class="singleEpithelialCellSizeValue">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="bareNuclei">Bare Nuclei</label>
             <input type="range" class="custom-range" min="1" max="10" id="bareNuclei">
-            <div class="bareNucleiValue">Value: </div>
+            <div class="bareNucleiValue">Value: 6</div>
         </div>
     </div>
     <div class="row p-4">
         <div class="col-sm-4">
             <label for="blandChromatin">Bland Chromatin</label>
             <input type="range" class="custom-range" min="1" max="10" id="blandChromatin">
-            <div class="blandChromatinValue">Value: </div>
+            <div class="blandChromatinValue">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="normalNucleoli">Normal Nucleoli</label>
             <input type="range" class="custom-range" min="1" max="10" id="normalNucleoli">
-            <div class="normalNucleoliValue">Value: </div>
+            <div class="normalNucleoliValue">Value: 6</div>
         </div>
         <div class="col-sm-4">
             <label for="mitoses">Mitoses</label>
             <input type="range" class="custom-range" min="1" max="10" id="mitoses">
-            <div class="mitosesValue">Value: </div>
+            <div class="mitosesValue">Value: 6</div>
         </div>
     </div>
-    <button class="submit btn-primary">Submit </button>
-    <div class="diagnose"></div>
+    <button class="submit btn btn-primary">Submit </button>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 diagnose p-5"></div>
+        <div class="col-sm-4"></div>
+    </div>
+    
 </form>
 {% block javascript %}
 
@@ -64,47 +69,47 @@
     $(document).ready(function () {
        
         $('#clump_thickness').change(function () {
-            $('.clump_value').html('Value:');
+            $('.clump_value').html('Value: ');
             $('.clump_value').append(this.value);
             console.log("value is", this.value);
         });
         $('#uniformityofCellSize').change(function () {
-            $('.uniformityofCellSizeValue').html('Value:');
+            $('.uniformityofCellSizeValue').html('Value: ');
             $('.uniformityofCellSizeValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#uniformityofCellShape').change(function () {
-            $('.uniformityofCellShapeValue').html('Value:');
+            $('.uniformityofCellShapeValue').html('Value: ');
             $('.uniformityofCellShapeValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#marginalAdhesion').change(function () {
-            $('.marginalAdhesionValue').html('Value:');
+            $('.marginalAdhesionValue').html('Value: ');
             $('.marginalAdhesionValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#singleEpithelialCellSize').change(function () {
-            $('.singleEpithelialCellSizeValue').html('Value:');
+            $('.singleEpithelialCellSizeValue').html('Value: ');
             $('.singleEpithelialCellSizeValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#bareNuclei').change(function () {
-            $('.bareNucleiValue').html('Value:');
+            $('.bareNucleiValue').html('Value: ');
             $('.bareNucleiValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#blandChromatin').change(function () {
-            $('.blandChromatinValue').html('Value:');
+            $('.blandChromatinValue').html('Value: ');
             $('.blandChromatinValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#normalNucleoli').change(function () {
-            $('.normalNucleoliValue').html('Value:');
+            $('.normalNucleoliValue').html('Value: ');
             $('.normalNucleoliValue').append(this.value);
             console.log("value is", this.value);
         });
         $('#mitoses').change(function () {
-            $('.mitosesValue').html('Value:');
+            $('.mitosesValue').html('Value: ');
             $('.mitosesValue').append(this.value);
             console.log("value is", this.value);
         });
@@ -149,7 +154,7 @@
                 },
                 success: function (data) {
                     console.log("something")
-                    $('.diagnose').html(data);
+                    $('.diagnose').html('<b>The tumour is ' + data + '</b>');
                 },
             });
             e.preventDefault();
@@ -159,6 +164,6 @@
 
 
 {% endblock javascript %}
-
 {% endif %}
+
 {% endblock %}

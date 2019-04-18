@@ -11,3 +11,17 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+.btn-primary {
+  background-color: #b70080;
+  border-color: #b70080;
+}
+.btn-primary:hover,.btn-primary:active{
+  border-color: #f181d0;
+  background-color: #f181d0;
+}
+.alert-success{
+  margin-top: 10px;
+  color:white;
+  background-color: #f0bee1;
+  border-color: #f181d0;
+}
